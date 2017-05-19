@@ -17,27 +17,12 @@ trait Uuid extends Id {
   val _id: String = java.util.UUID.randomUUID.toString
 }
 
-////////////////////////////////////////
-
-//abstract class Tag(_category: String) { // ...traits can't have ctor args??
-//  val category: String = _category
-trait Tag {
-  val category: String                            // ...instead of ctor arg
-  override def toString: String = "/" + category  // ??trait if it supplies implementation??, but...
-}
-
-//class TagUuid(_name: String) extends Tag(TagCategories.TagUuid) with Uuid {
-class TagUuid(_name: String) extends Tag with Uuid {
-  val category = TagCategories.TagUuid
-  val name: String = _name
-  override def toString: String = name + super[Uuid].toString + super[Tag].toString
-}
-
 // constants ///////////////////////////
 
 object TagCategories {
   val TagUuid = "taguuid"
 }
+import TagCategories._
 
 object TagNames {
   val Tag1 = "tag1"
@@ -49,4 +34,21 @@ object TagNames {
   val Tag7 = "tag7"
   val Tag8 = "tag8"
   val Tag9 = "tag9"
+}
+import TagNames._
+
+////////////////////////////////////////
+
+//abstract class Tag(_category: String) { // ...traits can't have ctor args??
+//  val category: String = _category
+trait Tag {
+  val category: String                            // ...instead of ctor arg
+  override def toString: String = "/" + category  // ??trait if it supplies implementation??, but...
+}
+
+//class TagUuid(val _name: String) extends Tag(TagCategories.TagUuid) with Uuid {
+class TagUuid(val _name: String) extends Tag with Uuid {
+  val category = TagUuid
+  val name: String = _name
+  override def toString: String = name + super[Uuid].toString + super[Tag].toString
 }
